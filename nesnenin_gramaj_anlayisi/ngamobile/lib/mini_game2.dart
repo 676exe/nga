@@ -105,7 +105,7 @@ class _MiniGame2State extends State<MiniGame2> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Bu ağırlıkta hangi ürün var?',
+                  'Bu ağırlıkta hangi ürün Olabilir?',
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
                 SizedBox(height: 20),

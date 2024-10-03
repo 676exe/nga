@@ -54,10 +54,19 @@ class _MiniGame1State extends State<MiniGame1> {
       ));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Yanlış cevap! ❌", style: TextStyle(color: Colors.red)),
-        duration: Duration(seconds: 2),
+        content: Text("Yanlış cevap! ❌ Doğru cevap: $_weight gram",
+            style: TextStyle(color: Colors.red)),
+        duration: Duration(seconds: 4),
       ));
     }
+
+    // 2 saniye bekleyip yeni soru için nesne ismini isteme
+    Future.delayed(Duration(seconds: 2), () {
+      _controller.clear(); // Önceki ismi temizle
+      _weight = null; // Ağırlığı sıfırla
+      _options.clear(); // Seçenekleri temizle
+      setState(() {}); // Arayüzü güncelle
+    });
   }
 
   @override
@@ -114,8 +123,7 @@ class _MiniGame1State extends State<MiniGame1> {
                 ),
                 child: Text('Ağırlığı Al'),
               ),
-              SizedBox(
-                  height: 40), // Şıkları yukarı almak için araya boşluk ekledik
+              SizedBox(height: 40),
               if (_weight != null) ...[
                 Text(
                   'Şıkları Göster:',
@@ -125,7 +133,6 @@ class _MiniGame1State extends State<MiniGame1> {
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
-                // Butonları 2x2 düzenlemek için Row ve Column kullanıyoruz
                 Column(
                   children: [
                     Row(
@@ -146,7 +153,7 @@ class _MiniGame1State extends State<MiniGame1> {
                                     fontSize: 20, color: Colors.white)),
                           ),
                         ),
-                        SizedBox(width: 10), // Butonlar arasında boşluk
+                        SizedBox(width: 10),
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () => _checkAnswer(_options[1]),
@@ -164,7 +171,7 @@ class _MiniGame1State extends State<MiniGame1> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20), // Satırlar arasında boşluk
+                    SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -183,7 +190,7 @@ class _MiniGame1State extends State<MiniGame1> {
                                     fontSize: 20, color: Colors.white)),
                           ),
                         ),
-                        SizedBox(width: 10), // Butonlar arasında boşluk
+                        SizedBox(width: 10),
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () => _checkAnswer(_options[3]),

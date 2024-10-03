@@ -25,6 +25,8 @@ class _MiniGame3State extends State<MiniGame3> {
   String? _currentObject;
   List<int> _options = [];
   bool _gameStarted = false; // Oyun başlamadı
+  String _feedbackMessage = ''; // Kullanıcı geri bildirimi
+  final TextEditingController _objectController = TextEditingController();
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _MiniGame3State extends State<MiniGame3> {
       _score = 0;
       _timeLeft = 45;
       _gameStarted = true; // Oyun başladı
+      _feedbackMessage = ''; // Geri bildirim mesajını sıfırla
     });
     _nextQuestion();
     _startTimer();
@@ -59,7 +62,9 @@ class _MiniGame3State extends State<MiniGame3> {
     int randomIndex = random.nextInt(_products.length);
     _currentObject = _products[randomIndex]['name'];
     _options = _generateOptions(_products[randomIndex]['weight']);
-    setState(() {});
+    setState(() {
+      _feedbackMessage = ''; // Yeni soru için geri bildirimi sıfırla
+    });
   }
 
   List<int> _generateOptions(int correctWeight) {
@@ -79,15 +84,25 @@ class _MiniGame3State extends State<MiniGame3> {
   }
 
   void _checkAnswer(int selectedOption) {
-    if (selectedOption ==
-        _products.firstWhere(
-            (product) => product['name'] == _currentObject)['weight']) {
+    int correctWeight = _products
+        .firstWhere((product) => product['name'] == _currentObject)['weight'];
+
+    if (selectedOption == correctWeight) {
       setState(() {
         _score += 10;
+        _feedbackMessage = 'Doğru cevap! 🎉'; // Geri bildirim mesajı
+      });
+    } else {
+      setState(() {
+        _feedbackMessage =
+            'Yanlış cevap! Doğru cevap: $correctWeight gram'; // Geri bildirim mesajı
       });
     }
-    // Yanlış cevapta direkt diğer soruya geç
-    _nextQuestion();
+
+    // Diğer soruya geç
+    Future.delayed(Duration(seconds: 2), () {
+      _nextQuestion();
+    });
   }
 
   void _showResultDialog() {
@@ -129,7 +144,9 @@ class _MiniGame3State extends State<MiniGame3> {
       _score = 0;
       _timeLeft = 45;
       _gameStarted = false; // Oyun durdu
+      _feedbackMessage = ''; // Geri bildirim mesajını sıfırla
     });
+    _objectController.clear(); // Nesne ismi alanını temizle
   }
 
   @override
@@ -167,8 +184,27 @@ class _MiniGame3State extends State<MiniGame3> {
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 20),
+                    TextField(
+                      controller: _objectController,
+                      decoration: InputDecoration(
+                        labelText: 'Nesnenin ismini girin',
+                        labelStyle: TextStyle(color: Colors.white),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.teal),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.tealAccent),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: _startGame,
+                      onPressed: () {
+                        if (_objectController.text.isNotEmpty) {
+                          _startGame();
+                        }
+                      },
                       child: Text('Başla', style: TextStyle(fontSize: 20)),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.teal,
@@ -256,7 +292,7 @@ class _MiniGame3State extends State<MiniGame3> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20), // Satırlar arasında boşluk
+                          SizedBox(height: 20), // Satır boşluğu
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -294,6 +330,14 @@ class _MiniGame3State extends State<MiniGame3> {
                             ],
                           ),
                         ],
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        _feedbackMessage,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ],

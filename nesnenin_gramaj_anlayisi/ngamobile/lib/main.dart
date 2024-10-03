@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'mini_game1.dart'; // Mini oyun 1 sayfası
-import 'mini_game2.dart'; // Mini oyun 2 sayfası
-import 'mini_game3.dart'; // Mini oyun 3 sayfası
-import 'mini_game4.dart'; // Mini oyun 3 sayfası
+import 'mini_game1.dart';
+import 'mini_game2.dart';
+import 'mini_game3.dart';
+import 'mini_game4.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Nesnenin Gramaj Anlayışı',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
-        scaffoldBackgroundColor: Colors.deepPurple[50], // Arka plan rengi
+        scaffoldBackgroundColor: Colors.deepPurple[50],
       ),
       home: SplashScreen(),
     );
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // 3 saniye sonra ana ekrana yönlendirme
+
     Timer(Duration(seconds: 1), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => HomeScreen()),
@@ -70,19 +71,33 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Oyun Seçim Ekranı'),
+        centerTitle: true,
+        elevation: 0,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // İlk buton
-            _buildGameButton(context, 'Mini Oyun 1', MiniGame1()),
-            // İkinci buton
-            _buildGameButton(context, 'Mini Oyun 2', MiniGame2()),
-            // Üçüncü buton
-            _buildGameButton(context, 'Mini Oyun 3', MiniGame3()),
-             _buildGameButton(context, 'Mini Oyun 4', MiniGame4()),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.deepPurple[900]!, Colors.deepPurple[700]!],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GridView.count(
+              crossAxisCount: 2, // İki sütun
+              mainAxisSpacing: 20, // Sütunlar arasındaki boşluk
+              crossAxisSpacing: 20, // Satırlar arasındaki boşluk
+              children: [
+                _buildGameButton(context, 'Gramaj Tahmin Etme', MiniGame1()),
+                _buildGameButton(
+                    context, 'Gramaj ile Nesne Tahimin Etme', MiniGame2()),
+                _buildGameButton(context, 'Süreye Karşı', MiniGame3()),
+                _buildGameButton(context, 'Takım Oyunu', MiniGame4()),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -91,9 +106,17 @@ class HomeScreen extends StatelessWidget {
   // Butonları oluşturmak için yardımcı metod
   Widget _buildGameButton(BuildContext context, String title, Widget gamePage) {
     return Container(
-      margin: EdgeInsets.all(10), // Butonlar arasındaki boşluk
-      width: 150, // Buton genişliği
-      height: 150, // Buton yüksekliği
+      decoration: BoxDecoration(
+        color: Colors.white, // Buton arka plan rengi
+        borderRadius: BorderRadius.circular(15), // Köşe yuvarlama
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10,
+            offset: Offset(0, 4), // Gölgenin konumu
+          ),
+        ],
+      ),
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(
@@ -102,15 +125,19 @@ class HomeScreen extends StatelessWidget {
           );
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.deepPurple, // Buton rengi
+          backgroundColor: Colors.transparent, // Şeffaf arka plan
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15), // Köşe yuvarlama
           ),
-          elevation: 5, // Buton gölgesi
+          elevation: 0, // Buton gölgesi
         ),
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 20, color: Colors.white), // Buton metni
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text(
+            title,
+            style: TextStyle(
+                fontSize: 20, color: Colors.deepPurple), // Buton metni
+          ),
         ),
       ),
     );
