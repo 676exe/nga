@@ -24,8 +24,8 @@ class _MiniGame3State extends State<MiniGame3> {
   int _score = 0;
   String? _currentObject;
   List<int> _options = [];
-  bool _gameStarted = false; // Oyun başlamadı
-  String _feedbackMessage = ''; // Kullanıcı geri bildirimi
+  bool _gameStarted = false; 
+  String _feedbackMessage = ''; 
   final TextEditingController _objectController = TextEditingController();
 
   @override
@@ -37,8 +37,8 @@ class _MiniGame3State extends State<MiniGame3> {
     setState(() {
       _score = 0;
       _timeLeft = 45;
-      _gameStarted = true; // Oyun başladı
-      _feedbackMessage = ''; // Geri bildirim mesajını sıfırla
+      _gameStarted = true;
+      _feedbackMessage = '';
     });
     _nextQuestion();
     _startTimer();
@@ -63,7 +63,7 @@ class _MiniGame3State extends State<MiniGame3> {
     _currentObject = _products[randomIndex]['name'];
     _options = _generateOptions(_products[randomIndex]['weight']);
     setState(() {
-      _feedbackMessage = ''; // Yeni soru için geri bildirimi sıfırla
+      _feedbackMessage = '';
     });
   }
 
@@ -73,13 +73,13 @@ class _MiniGame3State extends State<MiniGame3> {
 
     while (options.length < 4) {
       int randomWeight =
-          random.nextInt(200) + 1; // 1 ile 200 arasında rastgele değer
+          random.nextInt(200) + 1; 
       if (!options.contains(randomWeight)) {
         options.add(randomWeight);
       }
     }
 
-    options.shuffle(); // Seçenekleri karıştır
+    options.shuffle();
     return options;
   }
 
@@ -90,16 +90,16 @@ class _MiniGame3State extends State<MiniGame3> {
     if (selectedOption == correctWeight) {
       setState(() {
         _score += 10;
-        _feedbackMessage = 'Doğru cevap! 🎉'; // Geri bildirim mesajı
+        _feedbackMessage = 'Doğru cevap! 🎉';
       });
     } else {
       setState(() {
         _feedbackMessage =
-            'Yanlış cevap! Doğru cevap: $correctWeight gram'; // Geri bildirim mesajı
+            'Yanlış cevap! Doğru cevap: $correctWeight gram';
       });
     }
 
-    // Diğer soruya geç
+
     Future.delayed(Duration(seconds: 2), () {
       _nextQuestion();
     });
@@ -143,15 +143,15 @@ class _MiniGame3State extends State<MiniGame3> {
     setState(() {
       _score = 0;
       _timeLeft = 45;
-      _gameStarted = false; // Oyun durdu
-      _feedbackMessage = ''; // Geri bildirim mesajını sıfırla
+      _gameStarted = false;
+      _feedbackMessage = '';
     });
-    _objectController.clear(); // Nesne ismi alanını temizle
+    _objectController.clear();
   }
 
   @override
   void dispose() {
-    _timer.cancel(); // Timer'ı durdur
+    _timer.cancel();
     super.dispose();
   }
 
@@ -172,7 +172,7 @@ class _MiniGame3State extends State<MiniGame3> {
           ),
         ),
         child: Center(
-          child: !_gameStarted // Oyun başlamadıysa butonu göster
+          child: !_gameStarted 
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -253,7 +253,6 @@ class _MiniGame3State extends State<MiniGame3> {
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 20),
-                      // Butonları 2x2 düzenlemek için Row ve Column kullanıyoruz
                       Column(
                         children: [
                           Row(
@@ -274,7 +273,7 @@ class _MiniGame3State extends State<MiniGame3> {
                                           fontSize: 20, color: Colors.white)),
                                 ),
                               ),
-                              SizedBox(width: 10), // Butonlar arasında boşluk
+                              SizedBox(width: 10),
                               Expanded(
                                 child: ElevatedButton(
                                   onPressed: () => _checkAnswer(_options[1]),
@@ -292,7 +291,7 @@ class _MiniGame3State extends State<MiniGame3> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20), // Satır boşluğu
+                          SizedBox(height: 20), 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -311,7 +310,7 @@ class _MiniGame3State extends State<MiniGame3> {
                                           fontSize: 20, color: Colors.white)),
                                 ),
                               ),
-                              SizedBox(width: 10), // Butonlar arasında boşluk
+                              SizedBox(width: 10), 
                               Expanded(
                                 child: ElevatedButton(
                                   onPressed: () => _checkAnswer(_options[3]),
