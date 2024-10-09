@@ -22,7 +22,7 @@ class _MiniGame2State extends State<MiniGame2> {
   bool _isGameOver = false;
 
   void _startGame() {
-    _isGameOver = false; // Oyun durumunu sıfırla
+    _isGameOver = false;
     Random random = Random();
     int randomIndex = random.nextInt(_products.length);
     _correctProduct = _products[randomIndex]['name'];
@@ -35,7 +35,7 @@ class _MiniGame2State extends State<MiniGame2> {
 
   void _generateOptions() {
     _options.clear();
-    _options.add({'name': _correctProduct, 'isCorrect': true}); // Doğru seçenek
+    _options.add({'name': _correctProduct, 'isCorrect': true});
 
     Random random = Random();
     while (_options.length < 4) {
@@ -47,12 +47,12 @@ class _MiniGame2State extends State<MiniGame2> {
       }
     }
 
-    _options.shuffle(); // Seçenekleri karıştır
+    _options.shuffle();
   }
 
   void _checkAnswer(bool isCorrect) {
     setState(() {
-      _isGameOver = true; // Oyun bitiş durumunu ayarla
+      _isGameOver = true; 
     });
 
     if (isCorrect) {
@@ -125,7 +125,7 @@ class _MiniGame2State extends State<MiniGame2> {
                             child: Text(_options[0]['name']),
                           ),
                         ),
-                        SizedBox(width: 10), // Butonlar arasında boşluk
+                        SizedBox(width: 10), 
                         Expanded(
                           child: ElevatedButton(
                             onPressed: _isGameOver
@@ -138,7 +138,7 @@ class _MiniGame2State extends State<MiniGame2> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20), // Satırlar arasında boşluk
+                    SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -152,7 +152,7 @@ class _MiniGame2State extends State<MiniGame2> {
                             child: Text(_options[2]['name']),
                           ),
                         ),
-                        SizedBox(width: 10), // Butonlar arasında boşluk
+                        SizedBox(width: 10),
                         Expanded(
                           child: ElevatedButton(
                             onPressed: _isGameOver
@@ -171,7 +171,7 @@ class _MiniGame2State extends State<MiniGame2> {
                 if (_isGameOver) ...[
                   ElevatedButton(
                     onPressed: () {
-                      _startGame(); // Yeni oyuna başla
+                      _startGame();
                     },
                     child: Text('Tekrar Sor'),
                     style: ElevatedButton.styleFrom(
