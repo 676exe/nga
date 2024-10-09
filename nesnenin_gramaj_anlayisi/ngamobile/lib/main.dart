@@ -53,11 +53,11 @@ class _SplashScreenState extends State<SplashScreen> {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Colors.deepPurple[700], // Başlık rengi
+                color: Colors.deepPurple[700],
               ),
             ),
             SizedBox(height: 20),
-            CircularProgressIndicator(), // Yüklenme animasyonu
+            CircularProgressIndicator(), 
           ],
         ),
       ),
@@ -86,9 +86,9 @@ class HomeScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: GridView.count(
-              crossAxisCount: 2, // İki sütun
-              mainAxisSpacing: 20, // Sütunlar arasındaki boşluk
-              crossAxisSpacing: 20, // Satırlar arasındaki boşluk
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
               children: [
                 _buildGameButton(context, 'Gramaj Tahmin Etme', MiniGame1()),
                 _buildGameButton(
@@ -103,17 +103,17 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Butonları oluşturmak için yardımcı metod
+
   Widget _buildGameButton(BuildContext context, String title, Widget gamePage) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white, // Buton arka plan rengi
-        borderRadius: BorderRadius.circular(15), // Köşe yuvarlama
+        color: Colors.white, 
+        borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 10,
-            offset: Offset(0, 4), // Gölgenin konumu
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -125,9 +125,9 @@ class HomeScreen extends StatelessWidget {
           );
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent, // Şeffaf arka plan
+          backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15), // Köşe yuvarlama
+            borderRadius: BorderRadius.circular(15),
           ),
           elevation: 0, // Buton gölgesi
         ),
@@ -136,7 +136,7 @@ class HomeScreen extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-                fontSize: 20, color: Colors.deepPurple), // Buton metni
+                fontSize: 20, color: Colors.deepPurple),
           ),
         ),
       ),
