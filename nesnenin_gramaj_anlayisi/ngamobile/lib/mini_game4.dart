@@ -13,24 +13,24 @@ class _MiniGame4State extends State<MiniGame4> {
   List<int> _options = [];
   int _aScore = 0;
   int _bScore = 0;
-  bool _isATurn = true; // Sıra kimde olduğunu takip eder
-  int? _weight; // Doğru cevap için değişken
+  bool _isATurn = true;
+  int? _weight;
   int _remainingQuestions = 5;
 
   @override
   void dispose() {
-    _objectNameController.dispose(); // Controller'ı temizler
+    _objectNameController.dispose();
     super.dispose();
   }
 
   Future<void> _getWeight() async {
     final response = await http.get(
-        Uri.parse('http://localhost:8080/data')); // Localhost adresini güncelle
+        Uri.parse('http://localhost:8080/data')); 
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      _weight = jsonResponse['data'][0]; // İlk veri
-      _options = _generateRandomOptions(_weight!); // Rastgele 3 şık oluştur
+      _weight = jsonResponse['data'][0]; 
+      _options = _generateRandomOptions(_weight!); 
       setState(() {});
     } else {
       throw Exception('Veri alınamadı');
@@ -41,43 +41,43 @@ class _MiniGame4State extends State<MiniGame4> {
     Random random = Random();
     List<int> options = [];
 
-    options.add(correctWeight); // Doğru değeri ekle
+    options.add(correctWeight); 
 
     while (options.length < 4) {
       int randomWeight =
-          random.nextInt(20) + 1; // 1 ile 20 arasında rastgele değer
+          random.nextInt(20) + 1; 
       if (!options.contains(randomWeight) && randomWeight != correctWeight) {
         options.add(randomWeight);
       }
     }
 
-    options.shuffle(); // Seçenekleri karıştır
+    options.shuffle(); 
     return options;
   }
 
   void _handleAnswer(int selectedAnswer) {
     if (selectedAnswer == _weight) {
-      // Doğru cevap verildi
+ 
       if (_isATurn) {
-        _aScore += 10; // A takımı puan kazandı
+        _aScore += 10; 
       } else {
-        _bScore += 10; // B takımı puan kazandı
+        _bScore += 10; 
       }
       _showNotification('Doğru cevap!');
     } else {
-      // Yanlış cevap verildi
+   
       _showNotification('Yanlış cevap! Doğru cevap: $_weight g');
     }
-    _isATurn = !_isATurn; // Sıra değişimi
+    _isATurn = !_isATurn;
     _nextQuestion();
   }
 
   void _nextQuestion() {
     if (_remainingQuestions > 0) {
       _remainingQuestions--;
-      _objectNameController.clear(); // Nesne ismini temizle
-      _options.clear(); // Şıkları temizle
-      setState(() {}); // Ekranı güncelle
+      _objectNameController.clear();
+      _options.clear(); 
+      setState(() {}); 
     } else {
       _showResultDialog();
     }
@@ -101,9 +101,9 @@ class _MiniGame4State extends State<MiniGame4> {
                 _aScore = 0;
                 _bScore = 0;
                 _remainingQuestions = 5;
-                _isATurn = true; // Başlangıçta A takımı
-                _options.clear(); // Şıkları temizle
-                _objectNameController.clear(); // Nesne ismi sıfırlansın
+                _isATurn = true; 
+                _options.clear();
+                _objectNameController.clear(); 
               });
             },
             child: Text('Tekrar Oyna'),
@@ -117,7 +117,7 @@ class _MiniGame4State extends State<MiniGame4> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: Duration(seconds: 2), // Mesajın görünme süresi
+        duration: Duration(seconds: 2),
       ),
     );
   }
@@ -156,7 +156,7 @@ class _MiniGame4State extends State<MiniGame4> {
             ElevatedButton(
               onPressed: () async {
                 if (_objectNameController.text.isNotEmpty) {
-                  await _getWeight(); // Localhost'tan değeri çek
+                  await _getWeight();
                 }
               },
               style: ElevatedButton.styleFrom(
