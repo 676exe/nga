@@ -129,7 +129,7 @@ class HomeScreen extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          elevation: 0, // Buton gölgesi
+          elevation: 0,
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
