@@ -20,8 +20,8 @@ class _MiniGame1State extends State<MiniGame1> {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      _weight = jsonResponse['data'][0]; // İlk veri
-      _options = _generateRandomOptions(_weight!); // Rastgele 3 şık oluştur
+      _weight = jsonResponse['data'][0];
+      _options = _generateRandomOptions(_weight!);
       setState(() {});
     } else {
       throw Exception('Veri alınamadı');
@@ -32,17 +32,17 @@ class _MiniGame1State extends State<MiniGame1> {
     Random random = Random();
     List<int> options = [];
 
-    options.add(correctWeight); // Doğru değeri ekle
+    options.add(correctWeight);
 
     while (options.length < 4) {
       int randomWeight =
-          random.nextInt(20) + 1; // 1 ile 20 arasında rastgele değer
+          random.nextInt(20) + 1;
       if (!options.contains(randomWeight)) {
         options.add(randomWeight);
       }
     }
 
-    options.shuffle(); // Seçenekleri karıştır
+    options.shuffle();
     return options;
   }
 
@@ -60,12 +60,12 @@ class _MiniGame1State extends State<MiniGame1> {
       ));
     }
 
-    // 2 saniye bekleyip yeni soru için nesne ismini isteme
+   
     Future.delayed(Duration(seconds: 2), () {
-      _controller.clear(); // Önceki ismi temizle
-      _weight = null; // Ağırlığı sıfırla
-      _options.clear(); // Seçenekleri temizle
-      setState(() {}); // Arayüzü güncelle
+      _controller.clear(); 
+      _weight = null;
+      _options.clear(); 
+      setState(() {});
     });
   }
 
